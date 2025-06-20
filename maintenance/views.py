@@ -128,3 +128,8 @@ def save_device_view(request):
             messages.error(request, "خطأ في اسم المستخدم أو كلمة السر")
             return redirect('save_device')
     return render(request, 'maintenance/save_device.html')
+
+from django.shortcuts import redirect, get_object_or_404
+
+def delete_record(request, record_id):
+    record = get_object_or_404(MaintenanceRecord, id=record_id)
