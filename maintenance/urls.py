@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import maintenance_form, records_view, edit_record, print_record, print_last_record, device_detail_view, print_receipt_view
+from .views import maintenance_form, records_view, edit_record, print_record, print_last_record, device_detail_view, print_receipt_view, save_device_view
 
 urlpatterns = [
     path('', maintenance_form, name='form'),
@@ -8,5 +8,6 @@ urlpatterns = [
     path('print/<int:record_id>/', print_record, name='print_record'),
     path('print-last/', print_last_record, name='print_last_record'),
     path('device/<str:serial>/', device_detail_view, name='device_detail'),
-    path('print/<str:serial>/', print_receipt_view, name='print_receipt'),  # إذا كان serial نص وليس
+    path('print/<str:serial>/', print_receipt_view, name='print_receipt'),
+    path('save-device/', save_device_view, name='save_device'),
 ]

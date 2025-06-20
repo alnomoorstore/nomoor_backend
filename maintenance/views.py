@@ -5,6 +5,8 @@ from django.db.models import Q
 from datetime import datetime
 from django.http import HttpResponse, HttpResponseNotFound
 from django.template.loader import render_to_string
+from .forms import SaveDeviceForm  # استيراد الفورم الجديد هنا
+from django.contrib import messages
 
 class MaintenanceForm(forms.ModelForm):
     class Meta:
@@ -26,6 +28,8 @@ class EditFieldsForm(forms.ModelForm):
         fields = ['device', 'maintenance_type', 'issue', 'price', 'status']
 
 def maintenance_form(request):
+    if not request.session.get('device_saved'):
+        return redirect('save_device')
     if request.method == 'POST':
         form = MaintenanceForm(request.POST)
         if form.is_valid():
@@ -46,12 +50,12 @@ def maintenance_form(request):
 
             if exists.exists():
                 form.save()
-                return redirect('form')  # تأكد من الاسم الصحيح هنا
+                return redirect('form')
             else:
                 form.add_error(None, 'تم إدخال نفس البيانات سابقاً بدون تغيير نوع الصيانة.')
     else:
         form = MaintenanceForm()
-    
+
     return render(request, 'maintenance/form.html', {'form': form})
 
 def edit_record(request, record_id):
@@ -109,3 +113,18 @@ def print_receipt(request, serial):
         return HttpResponseNotFound("لم يتم العثور على السجل")
     # Render قالب الطباعة مع البيانات record
     return render(request, 'maintenance/print.html', {'record': record})
+
+# ممكن تخزن الأجهزة المحفوظة في الجلسة أو بالقاعدة حسب احتياجك
+def save_device_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # افحص اسم المستخدم وكلمة السر، غيرها حسب ما تريد
+        if username == 'nomoor' and password == 'NR7777300nr':
+            request.session['device_saved'] = True
+            messages.success(request, "تم حفظ الجهاز بنجاح")
+            return redirect('form')  # بعد الحفظ رجع للصفحة الرئيسية أو حسب حاجتك
+        else:
+            messages.error(request, "خطأ في اسم المستخدم أو كلمة السر")
+            return redirect('save_device')
+    return render(request, 'maintenance/save_device.html')
