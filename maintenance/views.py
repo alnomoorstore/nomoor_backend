@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.template.loader import render_to_string
 from .forms import SaveDeviceForm  # استيراد الفورم الجديد هنا
 from django.contrib import messages
+from django.urls import reverse
 
 class MaintenanceForm(forms.ModelForm):
     class Meta:
@@ -114,8 +115,14 @@ def device_detail_view(request, serial):
     return render(request, 'maintenance/device_detail.html', {'record': record})
 
 def print_receipt_view(request, serial):
+    # بناء رابط كامل للجهاز
+    device_url = request.build_absolute_uri(reverse('device_detail', args=[serial]))
     record = get_object_or_404(MaintenanceRecord, serial=serial)
-    return render(request, 'maintenance/print.html', {'record': record})
+    context = {
+        'device_url': device_url,
+        'record': record,
+    }
+    return render(request, 'maintenance/print.html', context)
 
 def secure_device_detail(request, serial):
     record = get_object_or_404(MaintenanceRecord, serial=serial)
