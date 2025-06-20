@@ -1,0 +1,1 @@
+web: gunicorn nomoor_service.wsgi

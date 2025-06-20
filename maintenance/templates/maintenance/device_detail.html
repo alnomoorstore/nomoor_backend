@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>تفاصيل الجهاز</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f3fefe;
+            color: #222;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border: 1px solid #1F8687;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #1F8687;
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .header .thanks {
+            font-size: 15px;
+            color: #FE7E00;
+            margin-top: 5px;
+        }
+
+        .info {
+            background: #f9fefe;
+            border: 1px dashed #1F8687;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .info p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .info p strong {
+            color: #1F8687;
+            display: inline-block;
+            width: 140px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+            margin-top: 25px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 600px) {
+            .info p strong {
+                display: block;
+                width: 100%;
+                margin-bottom: 3px;
+            }
+
+            .info p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://i.postimg.cc/6pjDTsnL/logo.png" alt="Logo">
+            <h1>شركة كون النمور المتحدة</h1>
+            <div class="thanks">شكرًا لثقتكم بنا – يسعدنا خدمتك دائمًا 💙</div>
+        </div>
+
+        <div class="info">
+            <p><strong>اسم الزبون:</strong> {{ record.name }}</p>
+            <p><strong>رقم الهاتف:</strong> {{ record.phone }}</p>
+            <p><strong>نوع الجهاز:</strong> {{ record.device }}</p>
+            <p><strong>نوع الصيانة:</strong> {{ record.maintenance_type }}</p>
+            <p><strong>نوع العطل:</strong> {{ record.issue }}</p>
+            <p><strong>الحالة:</strong> {{ record.status }}</p>
+            <p><strong>السعر:</strong> {{ record.price }}</p>
+            <p><strong>تاريخ التسليم:</strong> {{ record.delivery_time|date:"Y-m-d H:i" }}</p>
+            <p><strong>ملاحظات:</strong> {{ record.notes }}</p>
+        </div>
+
+        <div class="footer">
+            📍 شارع فلسطين – مركز النمور<br>
+            ☎️ 7277<br>
+            نتشرف بخدمتكم ونسعد بزيارتكم مجددًا 🌟
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>وصل صيانة</title>
+  <style>
+    @page {
+      size: A5 landscape;
+      margin: 1cm;
+    }
+    body {
+      font-family: 'Lama Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #171717;
+      direction: rtl;
+    }
+    .receipt {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 20px 25px 50px 25px;
+      position: relative;
+      border: 1px solid #1F8687;
+      border-radius: 10px;
+      background-color: #B1EDE8;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 12.5px; /* مضبوط لحجم A5 */
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+    }
+    .title {
+      font-size: 15pt;
+      font-weight: bold;
+      color: #1F8687;
+    }
+    .maintenance {
+      font-size: 13pt;
+      color: #1F8687;
+      font-weight: bold;
+    }
+    .info {
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+    .info strong {
+      color: #FE7E00;
+    }
+    hr {
+      border: 0;
+      border-top: 1px dashed #1F8687;
+      margin: 8px 0;
+    }
+    .footer {
+      text-align: center;
+      font-size: 10px;
+      background: #fff;
+      padding: 6px;
+      border-radius: 6px;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+    .barcode {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      text-align: center;
+      width: 90px;
+    }
+    .barcode-label {
+      font-size: 10px;
+      font-weight: bold;
+      color: #1F8687;
+      margin-bottom: 2px;
+    }
+    .arrow {
+      font-size: 14px;
+      color: #1F8687;
+      margin-bottom: 2px;
+      line-height: 1;
+    }
+    .barcode img {
+      width: 100%;
+      max-width: 90px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="receipt">
+    <div>
+      <div class="header">
+        <div class="logo">
+          <img src="https://i.postimg.cc/6pjDTsnL/logo.png" alt="Logo">
+          <div class="title">شركة كون النمور المتحدة</div>
+        </div>
+        <div class="maintenance">قسم الصيانة: {{ record.maintenance_type }}</div>
+      </div>
+
+      <hr>
+
+      <div class="info"><strong>الزبون:</strong> {{ record.name }}</div>
+      <div class="info"><strong>الهاتف:</strong> {{ record.phone }}</div>
+
+      <hr>
+
+      <div class="info"><strong>نوع الجهاز:</strong> {{ record.device }}</div>
+      <div class="info"><strong>العطل:</strong> {{ record.issue }}</div>
+
+      <hr>
+
+      <div class="info"><strong>موظف الصيانة:</strong> {{ record.employee }}</div>
+      <div class="info"><strong>موظف الاستلام:</strong> {{ record.receiver }}</div>
+
+      <hr>
+
+      <div class="info"><strong>السعر:</strong> {{ record.price }}</div>
+      <div class="info"><strong>تاريخ الاستلام:</strong> {{ record.date_time|date:"Y-m-d H:i" }}</div>
+      <div class="info"><strong>وقت التسليم:</strong> {{ record.delivery_time|date:"Y-m-d H:i" }}</div>
+
+      <hr>
+
+      {% if record.notes %}
+        <div class="info"><strong>ملاحظات:</strong> {{ record.notes }}</div>
+      {% endif %}
+    </div>
+
+    <div style="font-size: x-large; text-align: center; margin-top: 20px; color: #1F8687;">
+      شكراً لاختياركم النمور ستور... نتمنى لكم يوماً جميلاً
+    </div>
+
+    <div class="footer">
+      يسقط حق المطالبة بالجهاز بعد شهر من تاريخ التسليم<br>
+      المركز غير مسؤول عن الأعطال غير المبلغة<br>
+      احتفظ بالوصل لاستلام الجهاز<br><br>
+      📍 شارع فلسطين – مركز النمور | ☎️ 7277
+    </div>
+
+    <div class="barcode">
+      <div class="barcode-label">لمتابعة حالة الجهاز</div>
+      <div class="arrow">⬇</div>
+      <img src="https://barcode.tec-it.com/barcode.ashx?data=https://127.0.0.1:8000/device/{{ record.serial }}/&code=MobileQRCode" alt="QR Code">
+      <div style="font-size:11px; color:#1F8687; margin-top:4px; font-weight:bold;">
+        رقم الوصل: {{ record.serial }}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.print();
+  </script>
+</body>
+</html>
