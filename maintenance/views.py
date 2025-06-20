@@ -130,6 +130,14 @@ def save_device_view(request):
     return render(request, 'maintenance/save_device.html')
 
 from django.shortcuts import redirect, get_object_or_404
+from django.contrib import messages
 
 def delete_record(request, record_id):
     record = get_object_or_404(MaintenanceRecord, id=record_id)
+    if request.method == "POST":
+        record.delete()
+        messages.success(request, "تم حذف السجل بنجاح.")
+        return redirect('records')
+    else:
+        messages.error(request, "لا يمكن حذف السجل عبر طلب GET.")
+        return
