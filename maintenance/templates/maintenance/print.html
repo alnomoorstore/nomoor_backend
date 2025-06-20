@@ -156,7 +156,7 @@
     <div class="barcode">
       <div class="barcode-label">لمتابعة حالة الجهاز</div>
       <div class="arrow">⬇</div>
-      <img src="https://barcode.tec-it.com/barcode.ashx?data=https://127.0.0.1:8000/device/{{ record.serial }}/&code=MobileQRCode" alt="QR Code">
+      <img src="https://barcode.tec-it.com/barcode.ashx?data={{ request.scheme }}://{{ request.get_host }}{% url 'device_detail' record.serial %}&code=MobileQRCode" alt="QR Code" />
       <div style="font-size:11px; color:#1F8687; margin-top:4px; font-weight:bold;">
         رقم الوصل: {{ record.serial }}
       </div>

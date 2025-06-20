@@ -88,9 +88,9 @@ def print_last_record(request):
     html = render_to_string('maintenance/print.html', {'record': record})
     return HttpResponse(html)
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 
-def device_detail(request, serial):
+def device_detail_view(request, serial):
     record = get_object_or_404(MaintenanceRecord, serial=serial)
     return render(request, 'maintenance/device_detail.html', {'record': record})
 
