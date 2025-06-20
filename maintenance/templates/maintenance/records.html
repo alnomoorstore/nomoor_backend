@@ -2,170 +2,327 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <title>سجلات الصيانة</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
-    <style>
-        body {
-            background: linear-gradient(135deg, #B1EDE8, #ffffff);
-            font-family: 'Lama Sans', sans-serif;
-            color: #171717;
-        }
+  <meta charset="UTF-8" />
+  <title>سجلات الصيانة</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
-        h2.text-primary {
-            color: #1F8687 !important;
-            font-weight: 700;
-        }
+    body {
+      background: linear-gradient(135deg, #1F8687, #FE7E00);
+      font-family: 'Cairo', sans-serif;
+      color: #2c3e50;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
 
-        .btn-secondary {
-            background-color: #1F8687;
-            border: none;
-            font-weight: bold;
-        }
-        .btn-secondary:hover {
-            background-color: #145959;
-        }
+    .container {
+      max-width: 1100px;
+      width: 100%;
+      background: #ffffffdd;
+      backdrop-filter: saturate(180%) blur(12px);
+      border-radius: 15px;
+      padding: 25px 30px 40px 30px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
 
-        .table-primary {
-            background-color: #1F8687 !important;
-            color: white !important;
-            font-weight: 700;
-            text-align: center;
-        }
+    h2 {
+      font-weight: 700;
+      font-size: 2.7rem;
+      color: #2980b9;
+      text-align: center;
+      margin: 0;
+      user-select: none;
+    }
 
-        .table-bordered {
-            border: 1px solid #1F8687 !important;
-        }
+    /* الفلترة */
+    .filters {
+      display: flex;
+      gap: 30px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      align-items: center;
+    }
 
-        .table-striped > tbody > tr:nth-of-type(odd) {
-            background-color: #B1EDE8 !important;
-        }
+    label {
+      font-weight: 700;
+      color: #1F8687;
+      min-width: 90px;
+      user-select: none;
+      font-size: 1.1rem;
+    }
 
-        .btn-warning {
-            background: #FE7E00;
-            border: none;
-            color: white;
-            font-weight: bold;
-        }
-        .btn-warning:hover {
-            background: #FF9933;
-            color: white;
-        }
+    select {
+      padding: 10px 16px;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      border: 2px solid #1F8687;
+      background: #fefefe;
+      color: #1F8687;
+      cursor: pointer;
+      font-weight: 700;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      min-width: 200px;
+      user-select: none;
+    }
+    select:hover, select:focus {
+      border-color: #FE7E00;
+      box-shadow: 0 0 10px #FE7E00cc;
+      outline: none;
+      background: #fff;
+    }
 
-        .btn-danger {
-            background-color: #e74c3c;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-weight: bold;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
+    /* شبكة السجلات */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      width: 100%;
+    }
 
-        .btn-primary {
-            background: #1F8687;
-            border: none;
-            font-weight: bold;
-            color: white;
-        }
-        .btn-primary:hover {
-            background: #145959;
-            color: white;
-        }
+    /* بطاقة السجل */
+    .card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      padding: 25px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      user-select: none;
+    }
+    .card:hover {
+      box-shadow: 0 15px 45px rgba(0,0,0,0.25);
+      transform: translateY(-8px);
+    }
 
-        a.btn {
-            text-decoration: none;
-        }
+    .field {
+      margin-bottom: 12px;
+      font-size: 1rem;
+      line-height: 1.4;
+      color: #34495e;
+    }
+    .field strong {
+      color: #2980b9;
+      font-weight: 800;
+      margin-left: 8px;
+    }
 
-        /* جعل الجدول مريح للقراءة */
-        table tbody tr td {
-            vertical-align: middle;
-        }
-    </style>
+    /* أزرار الإجراءات */
+    .actions {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+      user-select: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-warning {
+      background: linear-gradient(90deg, #f39c12, #d68910);
+    }
+    .btn-warning:hover, .btn-warning:focus {
+      background: linear-gradient(90deg, #e67e22, #c97a14);
+      box-shadow: 0 10px 25px #d68910cc;
+      transform: scale(1.05);
+      color: white;
+      outline: none;
+    }
+    .btn-danger {
+      background: linear-gradient(90deg, #c0392b, #992d22);
+    }
+    .btn-danger:hover, .btn-danger:focus {
+      background: linear-gradient(90deg, #e74c3c, #b03126);
+      box-shadow: 0 10px 25px #b03126cc;
+      transform: scale(1.05);
+      outline: none;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, #2980b9, #1F8687);
+    }
+    .btn-primary:hover, .btn-primary:focus {
+      background: linear-gradient(90deg, #21618c, #176368);
+      box-shadow: 0 10px 25px #176368cc;
+      transform: scale(1.05);
+      outline: none;
+    }
+
+    /* تحجيم متجاوب */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 15px 30px 15px;
+      }
+      .filters {
+        gap: 20px;
+        max-width: 100%;
+      }
+      .field {
+        font-size: 0.95rem;
+      }
+      .btn {
+        font-size: 0.95rem;
+        padding: 10px 15px;
+      }
+    }
+    @media (max-width: 480px) {
+      .filters {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      label {
+        min-width: auto;
+        margin-left: 0;
+        margin-bottom: 8px;
+      }
+      select {
+        min-width: 100%;
+      }
+      .actions {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+        flex: none;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="container mt-5">
+  <div class="container">
+    <h2>سجلات الصيانة</h2>
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-primary">سجلات الصيانة</h2>
-        <a href="{% url 'form' %}" class="btn btn-secondary">⬅️ الرجوع للصفحة الرئيسية</a>
+    <div class="filters">
+      <label for="filterMaintenanceType">نوع الصيانة:</label>
+      <select id="filterMaintenanceType" aria-label="فلتر نوع الصيانة">
+        <option value="">كل أنواع الصيانة</option>
+        {% for m_type in maintenance_types %}
+          <option value="{{ m_type }}">{{ m_type }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="filterStatus">الحالة:</label>
+      <select id="filterStatus" aria-label="فلتر الحالة">
+        <option value="">كل الحالات</option>
+      </select>
     </div>
 
-    <form method="get" class="mb-4">
-        <div class="row g-2 align-items-center">
-            <div class="col-auto">
-                <label for="type" class="col-form-label fw-bold" style="color:#1F8687;">فلترة حسب نوع الصيانة:</label>
-            </div>
-            <div class="col-auto">
-                <select id="type" name="type" class="form-select border border-primary" onchange="this.form.submit()">
-                    <option value="">الكل</option>
-                    <option value="هواتف" {% if request.GET.type == 'هواتف' %}selected{% endif %}>هواتف</option>
-                    <option value="ألعاب" {% if request.GET.type == 'ألعاب' %}selected{% endif %}>ألعاب</option>
-                    <option value="تجميعات" {% if request.GET.type == 'تجميعات' %}selected{% endif %}>تجميعات</option>
-                </select>
-            </div>
+    <div class="cards-container" id="cardsContainer">
+      {% for record in records %}
+      <div class="card" data-maintenance="{{ record.maintenance_type }}" data-status="{{ record.status }}">
+        <div class="field"><strong>الاسم:</strong> {{ record.name }}</div>
+        <div class="field"><strong>الهاتف:</strong> {{ record.phone }}</div>
+        <div class="field"><strong>الجهاز:</strong> {{ record.device }}</div>
+        <div class="field"><strong>نوع الصيانة:</strong> {{ record.maintenance_type }}</div>
+        <div class="field"><strong>نوع العطل:</strong> {{ record.issue }}</div>
+        <div class="field"><strong>السعر:</strong> {{ record.price }}</div>
+        <div class="field"><strong>اسم الموظف:</strong> {{ record.employee }}</div>
+        <div class="field"><strong>المستلم:</strong> {{ record.receiver }}</div>
+        <div class="field"><strong>ملاحظات:</strong> {{ record.notes }}</div>
+        <div class="field"><strong>التاريخ:</strong> {{ record.date_time|date:"Y-m-d H:i" }}</div>
+        <div class="field"><strong>وقت التسليم:</strong> {{ record.delivery_time|date:"Y-m-d H:i" }}</div>
+        <div class="field"><strong>الحالة:</strong> {{ record.status }}</div>
+        <div class="field"><strong>السيريال:</strong> {{ record.serial }}</div>
+
+        <div class="actions">
+          <a href="{% url 'edit_record' record.id %}" class="btn btn-warning" title="تعديل">✏️ تعديل</a>
+          <form action="{% url 'delete_record' record.id %}" method="post" style="margin:0; flex:1;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger" title="حذف" onclick="return confirm('هل أنت متأكد من حذف هذا السجل؟');">🗑️ حذف</button>
+          </form>
+          <a href="{% url 'print_receipt' record.serial %}" target="_blank" class="btn btn-primary" title="طباعة">🖨️ طباعة</a>
         </div>
-    </form>
-
-    <div class="table-responsive shadow-sm rounded bg-white">
-        <table class="table table-bordered table-striped table-hover text-center align-middle mb-0">
-            <thead class="table-primary">
-                <tr>
-                    <th>الاسم</th>
-                    <th>الهاتف</th>
-                    <th>الجهاز</th>
-                    <th>نوع الصيانة</th>
-                    <th>نوع العطل</th>
-                    <th>السعر</th>
-                    <th>اسم الموظف</th>
-                    <th>المستلم</th>
-                    <th>ملاحظات</th>
-                    <th>التاريخ</th>
-                    <th>وقت التسليم</th>
-                    <th>الحالة</th>
-                    <th>السيريال</th>
-                    <th>الإجراء</th>
-                    <th>طباعة</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in records %}
-                <tr>
-                    <td>{{ record.name }}</td>
-                    <td>{{ record.phone }}</td>
-                    <td>{{ record.device }}</td>
-                    <td>{{ record.maintenance_type }}</td>
-                    <td>{{ record.issue }}</td>
-                    <td>{{ record.price }}</td>
-                    <td>{{ record.employee }}</td>
-                    <td>{{ record.receiver }}</td>
-                    <td>{{ record.notes }}</td>
-                    <td>{{ record.date_time|date:"Y-m-d H:i" }}</td>
-                    <td>{{ record.delivery_time|date:"Y-m-d H:i" }}</td>
-                    <td>{{ record.status }}</td>
-                    <td>{{ record.serial }}</td>
-                    <td>
-                        <a href="{% url 'edit_record' record.id %}" class="btn btn-sm btn-warning">✏️ تعديل</a>
-                        <form action="{% url 'delete_record' record.id %}" method="post" style="display:inline;">
-                          {% csrf_token %}
-                          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من حذف هذا السجل؟');">🗑️ حذف</button>
-                        </form>
-                    </td>
-                    <td>
-                        <a href="{% url 'print_receipt' record.serial %}" target="_blank" class="btn btn-sm btn-primary">🖨️ طباعة</a>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="15" class="text-muted">لا توجد بيانات لعرضها</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+      </div>
+      {% empty %}
+      <p style="color:#c0392b; font-weight: 700; text-align: center; width: 100%;">
+        لا توجد بيانات لعرضها
+      </p>
+      {% endfor %}
     </div>
-</div>
+  </div>
+
+  <script>
+    (() => {
+      const maintenanceSelect = document.getElementById('filterMaintenanceType');
+      const statusSelect = document.getElementById('filterStatus');
+      const cardsContainer = document.getElementById('cardsContainer');
+      const cards = cardsContainer.querySelectorAll('.card');
+
+      const statusMap = {
+        "هواتف": ["قيد الفحص", "قيد الصيانة", "جاهز للاستلام", "تم التسليم"],
+        "ألعاب": ["قيد الفحص", "قيد الصيانة", "جاهز للاستلام", "تم التسليم"],
+        "تجميعات": ["قيد الفحص", "قيد الصيانة", "جاهز للاستلام", "تم التسليم"]
+      };
+
+      function updateStatusOptions() {
+        const selectedMaintenance = maintenanceSelect.value;
+        statusSelect.innerHTML = '<option value="">كل الحالات</option>';
+
+        if (selectedMaintenance && statusMap[selectedMaintenance]) {
+          statusSelect.disabled = false;
+          statusMap[selectedMaintenance].forEach(status => {
+            const option = document.createElement('option');
+            option.value = status;
+            option.textContent = status;
+            statusSelect.appendChild(option);
+          });
+        } else {
+          const allStatuses = new Set();
+          Object.values(statusMap).forEach(arr => arr.forEach(status => allStatuses.add(status)));
+          allStatuses.forEach(status => {
+            const option = document.createElement('option');
+            option.value = status;
+            option.textContent = status;
+            statusSelect.appendChild(option);
+          });
+          statusSelect.disabled = false;
+        }
+        statusSelect.value = "";
+      }
+
+      function filterCards() {
+        const selectedMaintenance = maintenanceSelect.value;
+        const selectedStatus = statusSelect.value;
+
+        cards.forEach(card => {
+          const matchesMaintenance = !selectedMaintenance || card.dataset.maintenance === selectedMaintenance;
+          const matchesStatus = !selectedStatus || card.dataset.status === selectedStatus;
+          card.style.display = (matchesMaintenance && matchesStatus) ? 'flex' : 'none';
+        });
+      }
+
+      maintenanceSelect.addEventListener('change', () => {
+        updateStatusOptions();
+        filterCards();
+      });
+
+      statusSelect.addEventListener('change', filterCards);
+
+      updateStatusOptions();
+      filterCards();
+    })();
+  </script>
 </body>
 </html>

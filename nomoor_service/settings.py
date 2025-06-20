@@ -123,3 +123,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # تفعيل HTTPS في Render
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# السماح بالعرض داخل iframe لأي مصدر (غير آمن للإنتاج)
+X_FRAME_OPTIONS = 'ALLOWALL'
+

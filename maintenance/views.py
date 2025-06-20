@@ -72,13 +72,26 @@ def edit_record(request, record_id):
     return render(request, 'maintenance/edit_record.html', {'form': form})
 
 def records_view(request):
-    maintenance_type = request.GET.get('type')
-    if maintenance_type:
-        records = MaintenanceRecord.objects.filter(maintenance_type=maintenance_type)
-    else:
-        records = MaintenanceRecord.objects.all()
+    records = MaintenanceRecord.objects.all()
+    maintenance_types = records.values_list('maintenance_type', flat=True).distinct().order_by('maintenance_type')
 
-    return render(request, 'maintenance/records.html', {'records': records})
+    # بناء قاموس الحالات لكل نوع صيانة
+    status_map = {}
+    for m_type in maintenance_types:
+        status_map[m_type] = list(
+            records.filter(maintenance_type=m_type)
+                   .values_list('status', flat=True)
+                   .distinct()
+                   .order_by('status')
+        )
+
+    return render(request, 'maintenance/records.html', {
+        'records': records,
+        'maintenance_types': maintenance_types,
+        'status_map': status_map,
+        'selected_maintenance_type': request.GET.get('type', ''),
+        'selected_status': request.GET.get('status', '')
+    })
 
 def print_record(request, record_id):
     record = MaintenanceRecord.objects.get(id=record_id)
