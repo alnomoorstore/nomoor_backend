@@ -46,13 +46,13 @@ def maintenance_form(request):
                 status=current['status'],
                 delivery_time=current['delivery_time'],
                 date_time__date=datetime.today().date()
-            ).exclude(maintenance_type=current['maintenance_type'])
+            ).filter(maintenance_type=current['maintenance_type'])
 
             if exists.exists():
-                form.save()
-                return redirect('form')
+                form.add_error(None, 'تم إدخال نفس البيانات سابقاً بنفس نوع الصيانة.')
             else:
-                form.add_error(None, 'تم إدخال نفس البيانات سابقاً بدون تغيير نوع الصيانة.')
+                form.save()
+                return
     else:
         form = MaintenanceForm()
 
