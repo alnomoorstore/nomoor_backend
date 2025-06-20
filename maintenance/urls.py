@@ -8,5 +8,5 @@ urlpatterns = [
     path('print/<int:record_id>/', print_record, name='print_record'),
     path('print-last/', print_last_record, name='print_last_record'),
     path('device/<str:serial>/', device_detail_view, name='device_detail'),
-    path('print/<str:serial>/', print_receipt_view, name='print_receipt'),
+    path('print/<str:serial>/', print_receipt_view, name='print_receipt'),  # إذا كان serial نص وليس
 ]

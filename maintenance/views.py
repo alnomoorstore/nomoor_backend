@@ -3,7 +3,7 @@ from .models import MaintenanceRecord
 from django import forms
 from django.db.models import Q
 from datetime import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.template.loader import render_to_string
 
 class MaintenanceForm(forms.ModelForm):
@@ -101,3 +101,11 @@ def print_receipt_view(request, serial):
 def secure_device_detail(request, serial):
     record = get_object_or_404(MaintenanceRecord, serial=serial)
     return render(request, 'maintenance/device_detail.html', {'record': record})
+
+def print_receipt(request, serial):
+    try:
+        record = MaintenanceRecord.objects.get(serial=serial)
+    except MaintenanceRecord.DoesNotExist:
+        return HttpResponseNotFound("لم يتم العثور على السجل")
+    # Render قالب الطباعة مع البيانات record
+    return render(request, 'maintenance/print.html', {'record': record})
