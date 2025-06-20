@@ -30,6 +30,7 @@ class EditFieldsForm(forms.ModelForm):
 def maintenance_form(request):
     if not request.session.get('device_saved'):
         return redirect('save_device')
+
     if request.method == 'POST':
         form = MaintenanceForm(request.POST)
         if form.is_valid():
@@ -52,7 +53,8 @@ def maintenance_form(request):
                 form.add_error(None, 'تم إدخال نفس البيانات سابقاً بنفس نوع الصيانة.')
             else:
                 form.save()
-                return
+                messages.success(request, "تم حفظ البيانات بنجاح.")
+                return redirect('form')  # إعادة تحميل الصفحة أو أي صفحة تريدها
     else:
         form = MaintenanceForm()
 
