@@ -120,8 +120,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# المسار الذي سيُجمع فيه كل ملفات static عند تشغيل collectstatic
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
