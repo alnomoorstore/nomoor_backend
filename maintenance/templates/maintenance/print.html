@@ -82,24 +82,34 @@
       bottom: 10px;
       right: 10px;
       text-align: center;
-      width: 110px; /* عرض أكبر قليلاً ليناسب حجم الصورة */
+      width: 120px; /* عرض مناسب للباركود */
+      user-select: none;
+      font-family: 'Lama Sans', sans-serif;
     }
     .barcode-label {
-      font-size: 10px;
-      font-weight: bold;
+      font-size: 11px;
+      font-weight: 700;
       color: #1F8687;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
+      letter-spacing: 0.3px;
     }
     .arrow {
-      font-size: 14px;
+      font-size: 16px;
       color: #1F8687;
-      margin-bottom: 2px;
+      margin-bottom: 6px;
       line-height: 1;
     }
     .barcode img {
-      width: 110px; /* نطابق العرض مع الحاوية */
+      width: 110px;
       height: 110px;
-      object-fit: contain; /* للحفاظ على تناسق الصورة */
+      object-fit: contain;
+      border: 1px solid #1F8687;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(31, 134, 135, 0.6);
+    }
+    /* إخفاء رقم الوصل */
+    .serial-number {
+      display: none;
     }
   </style>
 </head>
@@ -146,18 +156,19 @@
       شكراً لاختياركم النمور ستور... نتمنى لكم يوماً جميلاً
     </div>
 
-    <div class="footer">
-      يسقط حق المطالبة بالجهاز بعد شهر من تاريخ التسليم<br />
-      المركز غير مسؤول عن الأعطال غير المبلغة<br />
-      احتفظ بالوصل لاستلام الجهاز<br /><br />
-      📍 شارع فلسطين – مركز النمور | ☎️ 7277
-    </div>
+  <div class="footer">
+  📍 شارع فلسطين – مركز النمور<br />
+  📍 السيدية، شارع 40<br />
+  ☎️ 7277<br />
+  نتشرف بخدمتكم ونسعد بزيارتكم مجددًا 🌟
+</div>
+
 
     <div class="barcode">
       <div class="barcode-label">لمتابعة حالة الجهاز</div>
       <div class="arrow">⬇</div>
-      <img src="{{ qr_code_url }}" alt="QR Code" style="width:110px; height:auto;">
-      <div style="font-size:11px; color:#1F8687; margin-top:4px; font-weight:bold;">
+      <img src="{{ qr_code_url }}" alt="QR Code" />
+      <div class="serial-number">
         رقم الوصل: {{ record.serial }}
       </div>
     </div>
