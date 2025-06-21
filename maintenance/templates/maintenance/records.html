@@ -214,6 +214,17 @@
   <div class="container">
     <h2>سجلات الصيانة</h2>
 
+    <form method="get" style="margin-bottom: 20px;">
+      <input
+        type="text"
+        name="search"
+        placeholder="ابحث باسم الزبون"
+        value="{{ search_query }}"
+        style="padding: 6px 10px; font-size: 1rem;"
+      />
+      <button type="submit" style="padding: 6px 10px; font-size: 1rem;">بحث</button>
+    </form>
+
     <div class="filters">
       <label for="filterMaintenanceType">نوع الصيانة:</label>
       <select id="filterMaintenanceType" aria-label="فلتر نوع الصيانة">

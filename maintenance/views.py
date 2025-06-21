@@ -79,7 +79,12 @@ def edit_record(request, record_id):
     return render(request, 'maintenance/edit_record.html', {'form': form})
 
 def records_view(request):
-    records = MaintenanceRecord.objects.all()
+    search_query = request.GET.get('search', '')
+    if search_query:
+        records = MaintenanceRecord.objects.filter(name__icontains=search_query).order_by('-date_time')
+    else:
+        records = MaintenanceRecord.objects.all().order_by('-date_time')
+
     maintenance_types = records.values_list('maintenance_type', flat=True).distinct().order_by('maintenance_type')
 
     # بناء قاموس الحالات لكل نوع صيانة
@@ -92,13 +97,16 @@ def records_view(request):
                    .order_by('status')
         )
 
-    return render(request, 'maintenance/records.html', {
+    context = {
         'records': records,
         'maintenance_types': maintenance_types,
         'status_map': status_map,
         'selected_maintenance_type': request.GET.get('type', ''),
-        'selected_status': request.GET.get('status', '')
-    })
+        'selected_status': request.GET.get('status', ''),
+        'search_query': search_query
+    }
+
+    return render(request, 'maintenance/records.html', context)
 
 def print_record(request, record_id):
     record = MaintenanceRecord.objects.get(id=record_id)
