@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -226,7 +227,7 @@
 <body>
   <main class="container" role="main" aria-label="تفاصيل الجهاز">
     <header class="header">
-      <img src="https://i.postimg.cc/6pjDTsnL/logo.png" alt="شعار شركة كون النمور المتحدة" />
+      <img src="{% static 'images/logo.png' %}" alt="شعار" />
       <h1>شركة كون النمور المتحدة</h1>
       <div class="thanks">شكرًا لثقتكم بنا – يسعدنا خدمتك دائمًا 💙</div>
     </header>
