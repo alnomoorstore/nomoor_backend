@@ -2,48 +2,49 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>تفاصيل الجهاز - شركة كون النمور المتحدة</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
-    /* ضبط القواعد الأساسية */
-    * {
+    /* القواعد الأساسية */
+    *, *::before, *::after {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     html, body {
+      margin: 0; padding: 0;
       height: 100%;
       font-family: 'Cairo', sans-serif;
       background: linear-gradient(135deg, #c1f0f5 0%, #eaf9fa 100%);
       color: #15494d;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-      -webkit-text-size-adjust: 100%;
-      -webkit-tap-highlight-color: transparent;
       line-height: 1.5;
+      overflow-x: hidden;
     }
 
     body {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 15px;
+      padding: 1rem;
       min-height: 100vh;
     }
 
     .container {
       background: #fff;
-      max-width: 700px;
+      max-width: 720px;
       width: 100%;
       border-radius: 20px;
       border: 3px solid #1f8687;
       box-shadow: 0 10px 25px rgba(21, 73, 77, 0.25);
       overflow: hidden;
       animation: fadeInScale 0.5s ease forwards;
+      display: flex;
+      flex-direction: column;
+      min-height: 80vh;
+      max-height: 90vh;
     }
 
     @keyframes fadeInScale {
@@ -61,50 +62,56 @@
       background: #1f8687;
       color: #fff;
       text-align: center;
-      padding: 30px 20px 25px;
+      padding: 2rem 1rem 1.5rem;
       user-select: none;
+      flex-shrink: 0;
+      box-sizing: border-box;
     }
 
     .header img {
-      width: 80px;
-      height: 80px;
+      width: 96px;
+      height: 96px;
       border-radius: 50%;
       border: 3px solid #fe7e00;
       box-shadow: 0 0 15px #fe7e00aa;
-      margin-bottom: 15px;
+      margin-bottom: 1rem;
       background-color: #fff;
-      object-fit: cover;
+      object-fit: contain;
+      display: inline-block;
+      max-width: 100%;
     }
 
     .header h1 {
       font-weight: 900;
-      font-size: 26px;
+      font-size: 1.75rem;
       letter-spacing: 1.5px;
-      margin-bottom: 5px;
+      margin-bottom: 0.25rem;
       text-shadow: 0 0 6px #fe7e00;
     }
 
     .header .thanks {
       font-weight: 700;
-      font-size: 16px;
+      font-size: 1rem;
       color: #fe7e00;
       letter-spacing: 0.3px;
     }
 
     .info {
-      padding: 30px 25px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px 40px;
+      padding: 2rem 1.5rem;
       background: #e1f3f4;
+      flex-grow: 1;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem 2rem;
     }
 
     .info p {
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 8px 20px #a0d1d3aa;
-      padding: 16px 22px;
-      font-size: 17px;
+      padding: 1rem 1.5rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: #15494d;
       user-select: text;
@@ -116,10 +123,10 @@
 
     .info p strong {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 0.5rem;
       color: #fe7e00;
       font-weight: 900;
-      font-size: 15px;
+      font-size: 0.95rem;
       letter-spacing: 0.3px;
     }
 
@@ -132,36 +139,85 @@
 
     .footer {
       text-align: center;
-      padding: 25px 20px;
-      font-size: 15px;
+      padding: 1.5rem 1rem;
+      font-size: 1rem;
       color: #1f8687;
       background: linear-gradient(45deg, #fe7e00 0%, #fbc04d 100%);
       font-weight: 700;
       letter-spacing: 0.7px;
       user-select: none;
       box-shadow: inset 0 0 12px #f3b30d88;
+      flex-shrink: 0;
     }
 
     /* تجاوب لجميع الشاشات */
-    @media (max-width: 480px) {
-      .info {
-        padding: 20px 15px;
-        grid-template-columns: 1fr;
-        gap: 16px 0;
+    @media (max-width: 768px) {
+      .container {
+        max-width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        border-width: 0;
+        box-shadow: none;
       }
 
-      .info p {
-        font-size: 16px;
-        padding: 14px 18px;
+      .header img {
+        width: 80px;
+        height: 80px;
       }
 
       .header h1 {
-        font-size: 22px;
+        font-size: 1.5rem;
+      }
+
+      .header .thanks {
+        font-size: 0.9rem;
+      }
+
+      .info {
+        padding: 1.5rem 1rem;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem 1rem;
+      }
+
+      .info p {
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .footer {
+        font-size: 0.9rem;
+        padding: 1rem 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .info {
+        grid-template-columns: 1fr;
+        gap: 1rem 0;
+        padding: 1rem 0.75rem;
+      }
+
+      .info p {
+        font-size: 0.95rem;
+        padding: 0.6rem 0.75rem;
       }
 
       .header img {
         width: 70px;
         height: 70px;
+      }
+
+      .header h1 {
+        font-size: 1.25rem;
+      }
+
+      .header .thanks {
+        font-size: 0.85rem;
+      }
+
+      .footer {
+        font-size: 0.85rem;
+        padding: 0.75rem 0.5rem;
       }
     }
   </style>
