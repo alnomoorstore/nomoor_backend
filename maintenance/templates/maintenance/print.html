@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>وصل صيانة</title>
   <style>
     @page {
@@ -82,7 +82,7 @@
       bottom: 10px;
       right: 10px;
       text-align: center;
-      width: 90px;
+      width: 110px; /* عرض أكبر قليلاً ليناسب حجم الصورة */
     }
     .barcode-label {
       font-size: 10px;
@@ -97,9 +97,9 @@
       line-height: 1;
     }
     .barcode img {
-      width: 100%;
-      max-width: 90px;
-      height: auto;
+      width: 110px; /* نطابق العرض مع الحاوية */
+      height: 110px;
+      object-fit: contain; /* للحفاظ على تناسق الصورة */
     }
   </style>
 </head>
@@ -108,34 +108,34 @@
     <div>
       <div class="header">
         <div class="logo">
-          <img src="https://i.postimg.cc/6pjDTsnL/logo.png" alt="Logo">
+          <img src="https://i.postimg.cc/6pjDTsnL/logo.png" alt="Logo" />
           <div class="title">شركة كون النمور المتحدة</div>
         </div>
         <div class="maintenance">قسم الصيانة: {{ record.maintenance_type }}</div>
       </div>
 
-      <hr>
+      <hr />
 
       <div class="info"><strong>الزبون:</strong> {{ record.name }}</div>
       <div class="info"><strong>الهاتف:</strong> {{ record.phone }}</div>
 
-      <hr>
+      <hr />
 
       <div class="info"><strong>نوع الجهاز:</strong> {{ record.device }}</div>
       <div class="info"><strong>العطل:</strong> {{ record.issue }}</div>
 
-      <hr>
+      <hr />
 
       <div class="info"><strong>موظف الصيانة:</strong> {{ record.employee }}</div>
       <div class="info"><strong>موظف الاستلام:</strong> {{ record.receiver }}</div>
 
-      <hr>
+      <hr />
 
       <div class="info"><strong>السعر:</strong> {{ record.price }}</div>
       <div class="info"><strong>تاريخ الاستلام:</strong> {{ record.date_time|date:"Y-m-d H:i" }}</div>
       <div class="info"><strong>وقت التسليم:</strong> {{ record.delivery_time|date:"Y-m-d H:i" }}</div>
 
-      <hr>
+      <hr />
 
       {% if record.notes %}
         <div class="info"><strong>ملاحظات:</strong> {{ record.notes }}</div>
@@ -147,16 +147,16 @@
     </div>
 
     <div class="footer">
-      يسقط حق المطالبة بالجهاز بعد شهر من تاريخ التسليم<br>
-      المركز غير مسؤول عن الأعطال غير المبلغة<br>
-      احتفظ بالوصل لاستلام الجهاز<br><br>
+      يسقط حق المطالبة بالجهاز بعد شهر من تاريخ التسليم<br />
+      المركز غير مسؤول عن الأعطال غير المبلغة<br />
+      احتفظ بالوصل لاستلام الجهاز<br /><br />
       📍 شارع فلسطين – مركز النمور | ☎️ 7277
     </div>
 
     <div class="barcode">
       <div class="barcode-label">لمتابعة حالة الجهاز</div>
       <div class="arrow">⬇</div>
-      <img src="https://barcode.tec-it.com/barcode.ashx?data={{ device_url|urlencode }}&code=MobileQRCode" alt="QR Code" />
+      <img src="{{ qr_code_url }}" alt="QR Code" style="width:110px; height:auto;">
       <div style="font-size:11px; color:#1F8687; margin-top:4px; font-weight:bold;">
         رقم الوصل: {{ record.serial }}
       </div>

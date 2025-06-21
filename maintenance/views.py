@@ -8,6 +8,12 @@ from django.template.loader import render_to_string
 from .forms import SaveDeviceForm  # استيراد الفورم الجديد هنا
 from django.contrib import messages
 from django.urls import reverse
+import barcode
+from barcode.writer import ImageWriter
+from io import BytesIO
+import base64
+import qrcode
+import urllib.parse
 
 class MaintenanceForm(forms.ModelForm):
     class Meta:
@@ -109,32 +115,33 @@ def print_last_record(request):
     return HttpResponse(html)
 
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 
 def device_detail_view(request, serial):
     record = get_object_or_404(MaintenanceRecord, serial=serial)
     return render(request, 'maintenance/device_detail.html', {'record': record})
 
+def get_qr_code_url(data):
+    encoded_data = urllib.parse.quote(data)
+    return f"https://barcode.tec-it.com/barcode.ashx?data={encoded_data}&code=MobileQRCode"
+
 def print_receipt_view(request, serial):
-    # بناء رابط كامل للجهاز
-    device_url = request.build_absolute_uri(reverse('device_detail', args=[serial]))
     record = get_object_or_404(MaintenanceRecord, serial=serial)
+    # بناء رابط صفحة تفاصيل الجهاز للزبون
+    device_url = request.build_absolute_uri(reverse('device_detail', args=[serial]))
+    
+    # توليد رابط صورة باركود QR خارجي
+    qr_code_url = get_qr_code_url(device_url)
+    
     context = {
-        'device_url': device_url,
         'record': record,
+        'qr_code_url': qr_code_url,
     }
     return render(request, 'maintenance/print.html', context)
 
 def secure_device_detail(request, serial):
     record = get_object_or_404(MaintenanceRecord, serial=serial)
     return render(request, 'maintenance/device_detail.html', {'record': record})
-
-def print_receipt(request, serial):
-    try:
-        record = MaintenanceRecord.objects.get(serial=serial)
-    except MaintenanceRecord.DoesNotExist:
-        return HttpResponseNotFound("لم يتم العثور على السجل")
-    # Render قالب الطباعة مع البيانات record
-    return render(request, 'maintenance/print.html', {'record': record})
 
 # ممكن تخزن الأجهزة المحفوظة في الجلسة أو بالقاعدة حسب احتياجك
 def save_device_view(request):
@@ -163,3 +170,33 @@ def delete_record(request, record_id):
     else:
         messages.error(request, "لا يمكن حذف السجل عبر طلب GET.")
         return
+
+def generate_barcode_base64(serial):
+    try:
+        EAN = barcode.get_barcode_class('code128')
+        clean_serial = serial.replace('-', '')
+        ean = EAN(clean_serial, writer=ImageWriter())
+        buffer = BytesIO()
+        ean.write(buffer)
+        barcode_img = base64.b64encode(buffer.getvalue()).decode()
+        return f"data:image/png;base64,{barcode_img}"
+    except Exception as e:
+        print("Error generating barcode:", e)
+        return ""
+
+def generate_qrcode_base64(data):
+    qr = qrcode.QRCode(
+        version=1,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+
+    img = qr.make_image(fill_color="black", back_color="white")
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    img_str = base64.b64encode(buffer.getvalue()).decode()
+    return f"data:image/png;base64,{img_str}"
+
+

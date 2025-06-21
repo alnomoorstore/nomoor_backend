@@ -1,119 +1,196 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>تفاصيل الجهاز</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background-color: #f3fefe;
-            color: #222;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تفاصيل الجهاز - شركة كون النمور المتحدة</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
-        .container {
-            max-width: 650px;
-            margin: 40px auto;
-            background-color: #ffffff;
-            border: 1px solid #1F8687;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
+    /* ضبط القواعد الأساسية */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+    html, body {
+      height: 100%;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #c1f0f5 0%, #eaf9fa 100%);
+      color: #15494d;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: transparent;
+      line-height: 1.5;
+    }
 
-        .header img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      min-height: 100vh;
+    }
 
-        .header h1 {
-            color: #1F8687;
-            margin: 0;
-            font-size: 22px;
-        }
+    .container {
+      background: #fff;
+      max-width: 700px;
+      width: 100%;
+      border-radius: 20px;
+      border: 3px solid #1f8687;
+      box-shadow: 0 10px 25px rgba(21, 73, 77, 0.25);
+      overflow: hidden;
+      animation: fadeInScale 0.5s ease forwards;
+    }
 
-        .header .thanks {
-            font-size: 15px;
-            color: #FE7E00;
-            margin-top: 5px;
-        }
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.85);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
 
-        .info {
-            background: #f9fefe;
-            border: 1px dashed #1F8687;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
+    .header {
+      background: #1f8687;
+      color: #fff;
+      text-align: center;
+      padding: 30px 20px 25px;
+      user-select: none;
+    }
 
-        .info p {
-            margin: 10px 0;
-            font-size: 16px;
-        }
+    .header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid #fe7e00;
+      box-shadow: 0 0 15px #fe7e00aa;
+      margin-bottom: 15px;
+      background-color: #fff;
+      object-fit: cover;
+    }
 
-        .info p strong {
-            color: #1F8687;
-            display: inline-block;
-            width: 140px;
-        }
+    .header h1 {
+      font-weight: 900;
+      font-size: 26px;
+      letter-spacing: 1.5px;
+      margin-bottom: 5px;
+      text-shadow: 0 0 6px #fe7e00;
+    }
 
-        .footer {
-            text-align: center;
-            font-size: 14px;
-            color: #555;
-            margin-top: 25px;
-            border-top: 1px solid #ddd;
-            padding-top: 15px;
-            line-height: 1.8;
-        }
+    .header .thanks {
+      font-weight: 700;
+      font-size: 16px;
+      color: #fe7e00;
+      letter-spacing: 0.3px;
+    }
 
-        @media (max-width: 600px) {
-            .info p strong {
-                display: block;
-                width: 100%;
-                margin-bottom: 3px;
-            }
+    .info {
+      padding: 30px 25px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px 40px;
+      background: #e1f3f4;
+    }
 
-            .info p {
-                font-size: 15px;
-            }
-        }
-    </style>
+    .info p {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px #a0d1d3aa;
+      padding: 16px 22px;
+      font-size: 17px;
+      font-weight: 600;
+      color: #15494d;
+      user-select: text;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      cursor: default;
+      border: 2px solid transparent;
+      word-break: break-word;
+    }
+
+    .info p strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #fe7e00;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: 0.3px;
+    }
+
+    .info p:hover {
+      background-color: #fe7e00;
+      color: #fff;
+      box-shadow: 0 8px 25px #fe7e00cc;
+      border-color: #fe7e00;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 25px 20px;
+      font-size: 15px;
+      color: #1f8687;
+      background: linear-gradient(45deg, #fe7e00 0%, #fbc04d 100%);
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      user-select: none;
+      box-shadow: inset 0 0 12px #f3b30d88;
+    }
+
+    /* تجاوب لجميع الشاشات */
+    @media (max-width: 480px) {
+      .info {
+        padding: 20px 15px;
+        grid-template-columns: 1fr;
+        gap: 16px 0;
+      }
+
+      .info p {
+        font-size: 16px;
+        padding: 14px 18px;
+      }
+
+      .header h1 {
+        font-size: 22px;
+      }
+
+      .header img {
+        width: 70px;
+        height: 70px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="https://i.postimg.cc/6pjDTsnL/logo.png" alt="Logo">
-            <h1>شركة كون النمور المتحدة</h1>
-            <div class="thanks">شكرًا لثقتكم بنا – يسعدنا خدمتك دائمًا 💙</div>
-        </div>
+  <main class="container" role="main" aria-label="تفاصيل الجهاز">
+    <header class="header">
+      <img src="https://i.postimg.cc/6pjDTsnL/logo.png" alt="شعار شركة كون النمور المتحدة" />
+      <h1>شركة كون النمور المتحدة</h1>
+      <div class="thanks">شكرًا لثقتكم بنا – يسعدنا خدمتك دائمًا 💙</div>
+    </header>
 
-        <div class="info">
-            <p><strong>اسم الزبون:</strong> {{ record.name }}</p>
-            <p><strong>رقم الهاتف:</strong> {{ record.phone }}</p>
-            <p><strong>نوع الجهاز:</strong> {{ record.device }}</p>
-            <p><strong>نوع الصيانة:</strong> {{ record.maintenance_type }}</p>
-            <p><strong>نوع العطل:</strong> {{ record.issue }}</p>
-            <p><strong>الحالة:</strong> {{ record.status }}</p>
-            <p><strong>السعر:</strong> {{ record.price }}</p>
-            <p><strong>تاريخ التسليم:</strong> {{ record.delivery_time|date:"Y-m-d H:i" }}</p>
-            <p><strong>ملاحظات:</strong> {{ record.notes }}</p>
-        </div>
+    <section class="info">
+      <p><strong>اسم الزبون</strong> {{ record.name }}</p>
+      <p><strong>رقم الهاتف</strong> {{ record.phone }}</p>
+      <p><strong>نوع الجهاز</strong> {{ record.device }}</p>
+      <p><strong>نوع الصيانة</strong> {{ record.maintenance_type }}</p>
+      <p><strong>نوع العطل</strong> {{ record.issue }}</p>
+      <p><strong>الحالة</strong> {{ record.status }}</p>
+      <p><strong>السعر</strong> {{ record.price }}</p>
+      <p><strong>تاريخ التسليم</strong> {{ record.delivery_time|date:"Y-m-d H:i" }}</p>
+      <p><strong>ملاحظات</strong> {{ record.notes|default:"لا توجد ملاحظات" }}</p>
+    </section>
 
-        <div class="footer">
-            📍 شارع فلسطين – مركز النمور<br>
-            ☎️ 7277<br>
-            نتشرف بخدمتكم ونسعد بزيارتكم مجددًا 🌟
-        </div>
-    </div>
+    <footer class="footer" role="contentinfo">
+      📍 شارع فلسطين – مركز النمور<br />
+      ☎️ 7277<br />
+      نتشرف بخدمتكم ونسعد بزيارتكم مجددًا 🌟
+    </footer>
+  </main>
 </body>
 </html>
