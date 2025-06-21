@@ -11,3 +11,6 @@ asgiref
 sqlparse
 typing_extensions
 tzdata
+python-barcode==0.14.0
+Pillow>=9.0.0
+qrcode
