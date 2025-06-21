@@ -55,6 +55,17 @@
       font-size: 13pt;
       color: #1F8687;
       font-weight: bold;
+      text-align: center;
+      min-width: 180px;
+    }
+    .address {
+      font-size: 11pt;
+      color: #1F8687;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 4px;
+      min-width: 180px;
+      line-height: 1.2;
     }
     .info {
       font-size: 12px;
@@ -111,7 +122,10 @@
           <img src="https://i.postimg.cc/6pjDTsnL/logo.png" alt="Logo" />
           <div class="title">شركة كون النمور المتحدة</div>
         </div>
-        <div class="maintenance">قسم الصيانة: {{ record.maintenance_type }}</div>
+        <div>
+          <div class="maintenance">قسم الصيانة: {{ record.maintenance_type }}</div>
+          <div class="address">السيدية ، شارع 40</div>
+        </div>
       </div>
 
       <hr />
