@@ -115,12 +115,24 @@ def print_record(request, record_id):
 
 def print_last_record(request):
     try:
-        record = MaintenanceRecord.objects.latest('id')
+        record = MaintenanceRecord.objects.latest('date_time')
     except MaintenanceRecord.DoesNotExist:
         return HttpResponse("لا يوجد سجل حتى الآن.")
 
-    html = render_to_string('maintenance/print.html', {'record': record})
-    return HttpResponse(html)
+    # بناء رابط صفحة تفاصيل الجهاز للزبون
+    device_url = request.build_absolute_uri(reverse('device_detail', args=[record.serial]))
+
+    # توليد صورة باركود QR من الرابط
+    qr = qrcode.make(device_url)
+    buffer = BytesIO()
+    qr.save(buffer, format="PNG")
+    qr_code_url = base64.b64encode(buffer.getvalue()).decode()
+
+    context = {
+        'record': record,
+        'qr_code_url': f'data:image/png;base64,{qr_code_url}',
+    }
+    return render(request, 'maintenance/print.html', context)
 
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
